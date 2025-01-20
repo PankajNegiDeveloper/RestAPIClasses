@@ -1,0 +1,90 @@
+package com.rest.blog.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.rest.blog.dto.BlogPostDto;
+import com.rest.blog.entity.BlogPost;
+import com.rest.blog.exception.NoResourceFoundException;
+import com.rest.blog.repository.BlogPostRepo;
+import com.rest.blog.service.BlogPostService;
+
+@Service
+public class BlogPostServiceImpl implements BlogPostService {
+
+	private BlogPostRepo blogPostRepo;
+
+	@Autowired
+	private BlogPostServiceImpl(BlogPostRepo blogPostRepo) {
+		super();
+		this.blogPostRepo = blogPostRepo;
+	}
+
+	// *****************************************************************
+	// Logic for changing DtoToEntity and EntityToDto
+	private BlogPost mapDtoToEntity(BlogPostDto blogPostDto) {
+
+		// Converts a BlogPostDto into a BlogPost entity.
+		// because the repository layer works with entities, not DTOs
+		BlogPost blogPost = new BlogPost();
+		blogPost.setContent(blogPostDto.getContent());
+		blogPost.setDiscription(blogPostDto.getDiscription());
+		blogPost.setTitle(blogPostDto.getTitle());
+		blogPost.setBlogsId(blogPostDto.getBlogId());
+		return blogPost;
+	}
+
+	private BlogPostDto mapEntityToDto(BlogPost blogpost) {
+
+		// Converting a BlogPost(entity) to BlogPostDto
+		// because controller only understands Dto and not the entity
+		BlogPostDto blogPostDto = new BlogPostDto();
+		blogPostDto.setContent(blogpost.getContent());
+		blogPostDto.setDiscription(blogpost.getDiscription());
+		blogPostDto.setTitle(blogpost.getTitle());
+		blogPostDto.setBlogId(blogpost.getBlogsId());
+		return blogPostDto;
+	}
+	// *****************************************************************
+
+	// Creating Blogs here
+	@Override
+	public BlogPostDto createBlogPost(BlogPostDto blogpostdto) {
+		BlogPost blogPost = blogPostRepo.save(mapDtoToEntity(blogpostdto));
+		return mapEntityToDto(blogPost);
+	}
+
+	// finding by Id
+	@Override
+	public BlogPostDto findBlogPostById(Integer id) {
+		Optional<BlogPost> findById = blogPostRepo.findById(id);
+		BlogPost blogPost = findById.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", id));
+		return mapEntityToDto(blogPost);
+	}
+
+	// Find all records
+	@Override
+	public List<BlogPostDto> getAllBlogPost() {
+		List<BlogPost> findAll = blogPostRepo.findAll();
+		return findAll.stream().map(blogPost -> mapEntityToDto(blogPost)).toList();
+	}
+
+	// Update the records
+	@Override
+	public BlogPostDto updateBlogPost(BlogPostDto blogPostDto) {
+		Optional<BlogPost> findById = blogPostRepo.findById(blogPostDto.getBlogId());
+		findById.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId()));
+		BlogPost blogPostUpdate = blogPostRepo.save(mapDtoToEntity(blogPostDto));
+		return mapEntityToDto(blogPostUpdate);
+
+//		if(findById.isPresent()) {
+//			blogPostUpdate=blogPostRepo.save(mapDtoToEntity(blogPostDto));
+//		}else {
+//			throw new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId());
+//		}
+	}
+}
