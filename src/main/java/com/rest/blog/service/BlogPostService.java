@@ -15,4 +15,6 @@ public interface BlogPostService {
 	List<BlogPostDto> getAllBlogPost();
 	
 	BlogPostDto updateBlogPost (BlogPostDto blogPostDto);
+	
+	BlogPostDto deletePostById (Integer id);
 }

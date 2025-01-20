@@ -1,0 +1,10 @@
+package com.rest.blog.service;
+
+
+import com.rest.blog.dto.CommentsDto;
+
+public interface CommentsService {
+	// making this loosly coupling, we are creating service layer interface
+	
+	CommentsDto createComment(CommentsDto commentsDto);
+}

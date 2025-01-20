@@ -87,4 +87,11 @@ public class BlogPostServiceImpl implements BlogPostService {
 //			throw new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId());
 //		}
 	}
+
+	@Override
+	public BlogPostDto deletePostById(Integer id) {
+		BlogPost blogPost = blogPostRepo.findById(id).orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", id));
+		blogPostRepo.deleteById(id);
+		return mapEntityToDto(blogPost);
+	}
 }

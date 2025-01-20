@@ -3,6 +3,7 @@ package com.rest.blog.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rest.blog.dto.BlogPostDto;
 import com.rest.blog.entity.BlogPost;
 import com.rest.blog.service.BlogPostService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,11 +50,16 @@ public class BlogPostController {
 		List<BlogPostDto> allBlogPosts = blogPostService.getAllBlogPost();
 		return new ResponseEntity(allBlogPosts, HttpStatus.OK);
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<BlogPostDto> updateBlogPost(@RequestBody BlogPostDto blogPost){
+	public ResponseEntity<BlogPostDto> updateBlogPost(@RequestBody BlogPostDto blogPost) {
 		BlogPostDto updateBlogPost = blogPostService.updateBlogPost(blogPost);
 		return new ResponseEntity(updateBlogPost, HttpStatus.OK);
 	}
-	
+
+	@DeleteMapping("/{postId}")
+	public ResponseEntity<String> deletePostById(@PathVariable("postId") Integer postId) {
+		BlogPostDto deletePostById = blogPostService.deletePostById(postId);
+		return new ResponseEntity("Data Deleted successully",HttpStatus.OK);
+	}
 }
