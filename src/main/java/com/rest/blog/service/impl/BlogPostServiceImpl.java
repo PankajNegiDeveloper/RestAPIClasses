@@ -77,9 +77,9 @@ public class BlogPostServiceImpl implements BlogPostService {
 	@Override
 	public BlogPostDto updateBlogPost(BlogPostDto blogPostDto) {
 		Optional<BlogPost> findById = blogPostRepo.findById(blogPostDto.getBlogId());
-		findById.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId()));
-		BlogPost blogPostUpdate = blogPostRepo.save(mapDtoToEntity(blogPostDto));
-		return mapEntityToDto(blogPostUpdate);
+		BlogPost blogs = findById.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId()));
+		blogs= blogPostRepo.save(mapDtoToEntity(blogPostDto));
+		return mapEntityToDto(blogs);
 
 //		if(findById.isPresent()) {
 //			blogPostUpdate=blogPostRepo.save(mapDtoToEntity(blogPostDto));
@@ -87,7 +87,8 @@ public class BlogPostServiceImpl implements BlogPostService {
 //			throw new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId());
 //		}
 	}
-
+    
+	//delete the Post
 	@Override
 	public BlogPostDto deletePostById(Integer id) {
 		BlogPost blogPost = blogPostRepo.findById(id).orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", id));

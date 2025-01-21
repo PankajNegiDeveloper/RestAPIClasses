@@ -60,6 +60,6 @@ public class BlogPostController {
 	@DeleteMapping("/{postId}")
 	public ResponseEntity<String> deletePostById(@PathVariable("postId") Integer postId) {
 		BlogPostDto deletePostById = blogPostService.deletePostById(postId);
-		return new ResponseEntity("Data Deleted successully",HttpStatus.OK);
+		return new ResponseEntity("Data Deleted successully", HttpStatus.OK);
 	}
 }
