@@ -14,4 +14,6 @@ public interface CommentsService {
 	List<CommentsDto> getAllComments(Integer postId);
 
 	CommentsDto updateComment(CommentsDto commentDto);
+
+	void deleteByPostIdAndCommentId(Integer postId, Integer id);
 }

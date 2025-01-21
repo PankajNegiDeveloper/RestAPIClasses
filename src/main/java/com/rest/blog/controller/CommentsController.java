@@ -12,6 +12,7 @@ import com.rest.blog.dto.CommentsDto;
 import com.rest.blog.entity.Comments;
 import com.rest.blog.service.CommentsService;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,4 +55,12 @@ public class CommentsController {
 		CommentsDto updateComment = commentsService.updateComment(comments);
 		return new ResponseEntity(updateComment, HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/{postId}/comments/{id}")
+	public ResponseEntity<CommentsDto> updateComments(@PathVariable("postId") Integer postId, @PathVariable("id") Integer id) {
+		 commentsService.deleteByPostIdAndCommentId(postId,id);
+		return new ResponseEntity("Deleted successfully", HttpStatus.OK);
+	}
+	
+	
 }

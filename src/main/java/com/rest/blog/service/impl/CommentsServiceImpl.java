@@ -96,4 +96,13 @@ public class CommentsServiceImpl implements CommentsService {
 		comments = commentsRepo.save(mapDtoToEntity(commentDto));
 		return mapEntityToDto(comments);
 	}
+
+	@Override
+	public void deleteByPostIdAndCommentId(Integer postId, Integer commId) {
+
+		commentsRepo.deleteByPostIdAndCommentId(postId, commId);
+	}
+
+	// deleting the comment
+
 }
