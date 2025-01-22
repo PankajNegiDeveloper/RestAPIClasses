@@ -70,6 +70,7 @@ public class BlogPostServiceImpl implements BlogPostService {
 
 	// Find all records
 	@Override
+	//Pageable object here contains information about the requested page, size, and sorting.
 	public List<BlogPostDto> getAllBlogPost(Pageable page) {
 		Page<BlogPost> findAll = blogPostRepo.findAll(page);
 //		List<BlogPost> findAll = blogPostRepo.findAll();

@@ -52,6 +52,8 @@ public class BlogPostController {
 			@RequestParam(value = "sortBy", defaultValue = "blogsId", required = false) String sortBy,
 			@RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir) {
 
+		//Sort.Direction is an enumeration (enum) provided by Spring Data.It has two values: ASC (ascending) and DESC (descending).
+		//equalsIgnoreCase ensures that users can pass the sortDir parameter in any case format (e.g., "asc", "ASC", or "Asc"), and the server will still correctly interpret it.
 		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) 
 				? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
