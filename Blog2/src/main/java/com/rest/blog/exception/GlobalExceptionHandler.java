@@ -1,0 +1,19 @@
+package com.rest.blog.exception;
+
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+	@ExceptionHandler(exception = NoResourceFoundException.class)
+	public ResponseEntity<CustomExceptionResponse> NoResourceFoundException(NoResourceFoundException rne, WebRequest wr) {
+		
+		CustomExceptionResponse response = new CustomExceptionResponse();
+		response.setPath(wr.getContextPath());
+		return null;
+	}
+}
