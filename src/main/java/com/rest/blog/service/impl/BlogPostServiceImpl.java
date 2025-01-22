@@ -1,10 +1,12 @@
 package com.rest.blog.service.impl;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.rest.blog.dto.BlogPostDto;
@@ -68,9 +70,11 @@ public class BlogPostServiceImpl implements BlogPostService {
 
 	// Find all records
 	@Override
-	public List<BlogPostDto> getAllBlogPost() {
-		List<BlogPost> findAll = blogPostRepo.findAll();
-		return findAll.stream().map(blogPost -> mapEntityToDto(blogPost)).toList();
+	public List<BlogPostDto> getAllBlogPost(Pageable page) {
+		Page<BlogPost> findAll = blogPostRepo.findAll(page);
+//		List<BlogPost> findAll = blogPostRepo.findAll();
+		List<BlogPost> content = findAll.getContent();
+				return content.stream().map(blogPost -> mapEntityToDto(blogPost)).toList();
 	}
 
 	// Update the records
