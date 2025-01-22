@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.blog.dto.BlogPostDto;
 import com.rest.blog.service.BlogPostService;
+import com.rest.blog.util.PaginationConstants;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +35,7 @@ public class BlogPostController {
 	}
 
 	@PostMapping
-	public ResponseEntity<BlogPostDto> createBlog(@RequestBody BlogPostDto blogpost) {
+	public ResponseEntity<BlogPostDto> createBlog(@Valid @RequestBody BlogPostDto blogpost) {
 		BlogPostDto blogPostDto = blogPostService.createBlogPost(blogpost);
 		// 201 -- new resource has been created
 		// thats why using new keyword
@@ -47,8 +50,8 @@ public class BlogPostController {
 
 	@GetMapping
 	public ResponseEntity<BlogPostDto> getAllBlogPost(
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "5", required = false) Integer pageSize,
+			@RequestParam(value = "pageNo", defaultValue = PaginationConstants.PAGENUM, required = false) Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = PaginationConstants.PAGESIZE, required = false) Integer pageSize,
 			@RequestParam(value = "sortBy", defaultValue = "blogsId", required = false) String sortBy,
 			@RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir) {
 

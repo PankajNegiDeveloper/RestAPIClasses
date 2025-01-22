@@ -13,7 +13,7 @@ public class NoResourceFoundException extends RuntimeException{
 	private Integer fieldValue;
 	
 	public NoResourceFoundException(String resourceName, String fieldName, Integer fieldValue) {
-		super(String.format(resourceName+" not found with " +fieldName+ ":"+fieldValue));
+		super(String.format(resourceName+" not found with " +fieldName+ ": "+fieldValue));
 		this.resourceName = resourceName;
 		this.fieldName = fieldName;
 		this.fieldValue = fieldValue;

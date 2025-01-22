@@ -1,4 +1,4 @@
-package com.rest.blog.exception;
+package com.rest.blog.payloads;
 
 import java.util.Date;
 
@@ -8,6 +8,6 @@ import lombok.Data;
 public class CustomExceptionResponse {
 
 	private Date date;
-	private String path;
-	private String description;
+	private String message;
+	private String details;
 }
