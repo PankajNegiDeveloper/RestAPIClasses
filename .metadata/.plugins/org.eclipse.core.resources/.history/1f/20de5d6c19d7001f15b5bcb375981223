@@ -1,0 +1,9 @@
+package com.rest.blog.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.rest.blog.entity.Comments;
+
+public interface CommentsRepo extends JpaRepository<Comments, Integer>{
+
+}

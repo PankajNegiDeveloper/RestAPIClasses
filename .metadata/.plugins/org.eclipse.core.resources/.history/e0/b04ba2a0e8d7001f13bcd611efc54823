@@ -1,0 +1,10 @@
+package com.rest.blog.exception;
+
+import java.util.Date;
+
+public class CustomExceptionResponse {
+
+	private Date date;
+	private String path;
+	private String description;
+}

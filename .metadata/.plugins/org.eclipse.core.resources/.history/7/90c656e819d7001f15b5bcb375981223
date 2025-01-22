@@ -1,0 +1,12 @@
+package com.rest.blog.service;
+
+import org.springframework.stereotype.Service;
+
+import com.rest.blog.dto.CommentsDto;
+
+@Service
+public interface CommentsService {
+	// making this loosly coupling, we are creating service layer interface
+	
+	CommentsDto createComment(CommentsDto commentsDto);
+}

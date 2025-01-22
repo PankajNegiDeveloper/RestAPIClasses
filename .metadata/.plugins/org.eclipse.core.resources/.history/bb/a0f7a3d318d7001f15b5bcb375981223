@@ -1,0 +1,33 @@
+package com.rest.blog.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.rest.blog.dto.CommentsDto;
+import com.rest.blog.service.CommentsService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+@RestController
+@RequestMapping("/api/posts")
+public class CommentsController {
+
+	@Autowired
+	private CommentsService commentsService;
+
+	public CommentsController(CommentsService commentsService) {
+		super();
+		this.commentsService = commentsService;
+	}
+
+	//creating comment
+	@PostMapping("/comment")
+	public ResponseEntity<CommentsDto>(@RequestBody CommentsDto comments) {
+		CommentsDto commentsDto = commentsService.createComment(comments)
+		return entity;
+	}
+	
+}

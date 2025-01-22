@@ -1,0 +1,5 @@
+package com.rest.blog.service;
+
+public interface CommentsService {
+
+}

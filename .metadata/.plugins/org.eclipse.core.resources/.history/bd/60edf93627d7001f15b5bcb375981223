@@ -1,0 +1,62 @@
+package com.rest.blog.service.impl;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.rest.blog.dto.CommentsDto;
+import com.rest.blog.entity.BlogPost;
+import com.rest.blog.entity.Comments;
+import com.rest.blog.exception.NoResourceFoundException;
+import com.rest.blog.repository.BlogPostRepo;
+import com.rest.blog.repository.CommentsRepo;
+import com.rest.blog.service.CommentsService;
+
+@Service
+public class CommentsServiceImpl implements CommentsService {
+
+	@Autowired
+	private CommentsRepo commentsRepo;
+
+	@Autowired
+	private BlogPostRepo blogPostrepo;
+
+	@Autowired
+	public CommentsServiceImpl(CommentsRepo commentsRepo) {
+		super();
+		this.commentsRepo = commentsRepo;
+	}
+
+	// ************************************************************
+	private Comments mapDtoToEntity(CommentsDto commentsDto) {
+		Comments comment = new Comments();
+        comment.setComment(commentsDto.getComment());
+
+        // Fetch the BlogPost entity using the correct ID
+        BlogPost blogPost = blogPostrepo.findById(commentsDto.getBlogPost())
+                .orElseThrow(() -> new NoResourceFoundException("BlogPost", "ID", commentsDto.getBlogPost()));
+        comment.setBlogPost(blogPost);
+
+        return comment;
+	}
+
+	private CommentsDto mapEntityToDto(Comments comment) {
+		  CommentsDto commentDto = new CommentsDto();
+	        commentDto.setCommId(comment.getCommId()); // Set auto-generated Comment ID
+	        commentDto.setComment(comment.getComment());
+	        commentDto.setBlogPost(comment.getBlogPost().getBlogsId()); // Set BlogPost ID
+	        return commentDto;
+	}
+
+	// ***************************************************************
+
+	// creating comment
+	@Override
+	public CommentsDto createComment(CommentsDto commentsDto) {
+		Comments comment = new Comments();
+		comment = commentsRepo.save(mapDtoToEntity(commentsDto));
+		return mapEntityToDto(comment);
+	}
+
+}

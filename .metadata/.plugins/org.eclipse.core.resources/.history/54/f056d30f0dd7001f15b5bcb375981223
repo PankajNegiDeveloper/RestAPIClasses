@@ -1,0 +1,9 @@
+package com.rest.blog.dto;
+
+public class CommentsDto {
+	
+	private Integer commId;
+	private String comment;
+	private Integer blogsId;  
+
+}

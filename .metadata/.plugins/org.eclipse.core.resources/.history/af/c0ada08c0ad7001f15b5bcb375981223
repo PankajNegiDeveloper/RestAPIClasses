@@ -1,0 +1,9 @@
+package com.rest.blog.entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+
+public class CommentsController {
+
+}

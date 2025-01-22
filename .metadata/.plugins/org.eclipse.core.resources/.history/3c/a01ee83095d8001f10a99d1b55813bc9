@@ -1,0 +1,5 @@
+package com.rest.blog.exception;
+
+public class GlobalExceptionHandler {
+
+}

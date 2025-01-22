@@ -1,0 +1,5 @@
+package com.rest.blog.repository;
+
+public interface CommentsRepo {
+
+}

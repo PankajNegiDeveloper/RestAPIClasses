@@ -1,0 +1,10 @@
+package com.rest.blog.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="Comments_tb")
+public class Comments {
+
+}

@@ -1,0 +1,22 @@
+package com.rest.blog.service;
+
+import java.util.List;
+
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+
+import com.rest.blog.dto.BlogPostDto;
+import com.rest.blog.entity.BlogPost;
+
+public interface BlogPostService {
+//making this loosly coupling, we are creating service layer interface
+
+	BlogPostDto createBlogPost(BlogPostDto blogPostDto);
+
+	BlogPostDto findBlogPostById(Integer id);
+	
+	List<BlogPostDto> getAllBlogPost(Pageable page);
+	
+	BlogPostDto updateBlogPost (BlogPostDto blogPostDto);
+	
+	BlogPostDto deletePostById (Integer id);
+}
