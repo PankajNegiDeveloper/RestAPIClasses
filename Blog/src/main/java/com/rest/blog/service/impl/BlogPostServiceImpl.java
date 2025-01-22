@@ -1,8 +1,7 @@
 package com.rest.blog.service.impl;
 
-import java.util.List; 
+import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.rest.blog.dto.BlogPostDto;
+import com.rest.blog.dto.CommentsDto;
 import com.rest.blog.entity.BlogPost;
+import com.rest.blog.entity.Comments;
 import com.rest.blog.exception.NoResourceFoundException;
 import com.rest.blog.repository.BlogPostRepo;
 import com.rest.blog.service.BlogPostService;
@@ -19,6 +20,9 @@ import com.rest.blog.service.BlogPostService;
 public class BlogPostServiceImpl implements BlogPostService {
 
 	private BlogPostRepo blogPostRepo;
+	
+	@Autowired
+	private CommentsServiceImpl commentServiceImpl;
 
 	@Autowired
 	private BlogPostServiceImpl(BlogPostRepo blogPostRepo) {
@@ -49,6 +53,13 @@ public class BlogPostServiceImpl implements BlogPostService {
 		blogPostDto.setDiscription(blogpost.getDiscription());
 		blogPostDto.setTitle(blogpost.getTitle());
 		blogPostDto.setBlogId(blogpost.getBlogsId());
+
+		// This is done so that when we check all blog posts, we can see all comments
+		// related to it
+		List<Comments> list = blogpost.getComments();
+		List<CommentsDto> commentsDtoList = list.stream().map(comment -> commentServiceImpl.mapEntityToDto(comment)).toList();
+		blogPostDto.setComments(commentsDtoList);
+
 		return blogPostDto;
 	}
 	// *****************************************************************
@@ -70,20 +81,22 @@ public class BlogPostServiceImpl implements BlogPostService {
 
 	// Find all records
 	@Override
-	//Pageable object here contains information about the requested page, size, and sorting.
+	// Pageable object here contains information about the requested page, size, and
+	// sorting.
 	public List<BlogPostDto> getAllBlogPost(Pageable page) {
 		Page<BlogPost> findAll = blogPostRepo.findAll(page);
-//		List<BlogPost> findAll = blogPostRepo.findAll();
+		// List<BlogPost> findAll = blogPostRepo.findAll();
 		List<BlogPost> content = findAll.getContent();
-				return content.stream().map(blogPost -> mapEntityToDto(blogPost)).toList();
+		return content.stream().map(blogPost -> mapEntityToDto(blogPost)).toList();
 	}
 
 	// Update the records
 	@Override
 	public BlogPostDto updateBlogPost(BlogPostDto blogPostDto) {
 		Optional<BlogPost> findById = blogPostRepo.findById(blogPostDto.getBlogId());
-		BlogPost blogs = findById.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId()));
-		blogs= blogPostRepo.save(mapDtoToEntity(blogPostDto));
+		BlogPost blogs = findById
+				.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId()));
+		blogs = blogPostRepo.save(mapDtoToEntity(blogPostDto));
 		return mapEntityToDto(blogs);
 
 //		if(findById.isPresent()) {
@@ -92,11 +105,12 @@ public class BlogPostServiceImpl implements BlogPostService {
 //			throw new NoResourceFoundException("BlogPost", "Id", blogPostDto.getBlogId());
 //		}
 	}
-    
-	//delete the Post
+
+	// delete the Post
 	@Override
 	public BlogPostDto deletePostById(Integer id) {
-		BlogPost blogPost = blogPostRepo.findById(id).orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", id));
+		BlogPost blogPost = blogPostRepo.findById(id)
+				.orElseThrow(() -> new NoResourceFoundException("BlogPost", "Id", id));
 		blogPostRepo.deleteById(id);
 		return mapEntityToDto(blogPost);
 	}
