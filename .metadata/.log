@@ -6610,3 +6610,12 @@ java.lang.NullPointerException: Cannot invoke "org.eclipse.debug.core.ILaunchCon
 	at org.eclipse.debug.core.DebugPlugin$EventNotifier.dispatch(DebugPlugin.java:1321)
 	at org.eclipse.debug.core.DebugPlugin$EventDispatchJob.run(DebugPlugin.java:498)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-29 16:17:57.988
+!MESSAGE Classpath changed for project: blogpostcomment
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-29 16:18:00.805
+!MESSAGE Classpath changed for project: blogpostcomment
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-29 16:18:00.806
+!MESSAGE Boot project ADDED: blogpostcomment
