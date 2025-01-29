@@ -1,4 +1,4 @@
-GitRepositoriesView.GitDirectories=D\:\\RestAPIClasses\\Blog2\\.git;
-GitRepositoriesView.GitDirectories.relative=Blog2\\.git;
+GitRepositoriesView.GitDirectories=D\:\\RestAPIClasses\\.git;D\:\\RestAPIClasses\\Blog2\\.git;
+GitRepositoriesView.GitDirectories.relative=.git;Blog2\\.git;
 core_autoIgnoreDerivedResources=false
 eclipse.preferences.version=1

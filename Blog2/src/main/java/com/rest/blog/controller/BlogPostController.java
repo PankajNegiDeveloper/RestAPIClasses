@@ -35,7 +35,7 @@ public class BlogPostController {
 	}
 
 	@PostMapping
-	public ResponseEntity<BlogPostDto> createBlog(@Valid @RequestBody BlogPostDto blogpost) {
+	public ResponseEntity<BlogPostDto> createBlog(@RequestBody BlogPostDto blogpost) {
 		BlogPostDto blogPostDto = blogPostService.createBlogPost(blogpost);
 		// 201 -- new resource has been created
 		// thats why using new keyword
@@ -55,15 +55,14 @@ public class BlogPostController {
 			@RequestParam(value = "sortBy", defaultValue = "blogsId", required = false) String sortBy,
 			@RequestParam(value = "sortDir", defaultValue = "ASC", required = false) String sortDir) {
 
-		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) 
-				? Sort.by(sortBy).ascending()
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
 				: Sort.by(sortBy).descending();
 		PageRequest page = PageRequest.of(pageNo, pageSize, sort);
 		List<BlogPostDto> allBlogPosts = blogPostService.getAllBlogPost(page);
 		return new ResponseEntity(allBlogPosts, HttpStatus.OK);
 	}
 
-	@PutMapping
+	@PutMapping("/updateblog")
 	public ResponseEntity<BlogPostDto> updateBlogPost(@RequestBody BlogPostDto blogPost) {
 		BlogPostDto updateBlogPost = blogPostService.updateBlogPost(blogPost);
 		return new ResponseEntity(updateBlogPost, HttpStatus.OK);
