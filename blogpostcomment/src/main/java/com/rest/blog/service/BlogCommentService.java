@@ -11,7 +11,7 @@ public interface BlogCommentService {
 	List<BlogCommentDto> findCommentsByBlogPostId(Integer postid);
 	
 	List<BlogCommentDto> findCommentByBlogPostIdAndCommentId(Integer postid, Integer commid);
-	
+		
 	BlogCommentDto updateComment(BlogCommentDto blogCommentDto, Integer postid, Integer commid);
 	
 	BlogCommentDto deleteComment(Integer postid, Integer commid);
